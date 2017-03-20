@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My wishlist</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <div class="wrapper">
+    <h2>Wish List</h2>
+    <p></p>
+    <ul class="list-items">
+      <li>Loading Tapas...</li>
+    </ul>
+    <form class="add-items">
+      <input type="text" name="item" placeholder="wish" required>
+      <button class="add-item">+ Add Item</button>
+    </form>
+  </div>
+
+<script>
+  const addItems = document.querySelector('.add-item');
+  const itemsList = document.querySelector('.list-items');
+  //获取本地存储的items
+  const items = JSON.parse(localStorage.getItem('items')) || [];
+  // const item = document.querySelector('.item');
+  // console.log(JSON.parse(localStorage.getItem('items')));
+
+  //添加item
+  function addItem(e){
+    e.preventDefault(); //去掉默认行为
+    const text = document.querySelector('[name=item]').value;
+    const item = {
+      text,//text = text，ES6的简写模式
+      done:false
+    }
+    items.push(item);
+    // console.log(JSON.stringify(items));
+    renderWishList(items,itemsList)
+    localStorage.setItem('items',JSON.stringify(items));
+    
+    document.querySelector('.add-items').reset();
+  }
+
+  // function deleteItem(e){
+
+  // }
+
+
+  //渲染列表
+  function renderWishList (wishes = [],wishList){
+    wishList.innerHTML = wishes.map((wish,i) => {
+      return `
+        <li>
+          <input type="checkbox" data-index=${i}  id="item${i}" ${wish.done ? 'checked':''} />
+          <label for="item${i}">${wish.text}<span class="hide">x</span></label>
+        </li>`;
+    }).join('');
+    // console.log(wishList.innerHTML);
+  }
+
+//点击Checkbox
+  function toggleDone(e){    
+    if (!e.target.matches('input')) return;
+    const index = e.target.dataset.index;
+    items[index].done = !items[index].done;
+    renderWishList(items,itemsList);
+    localStorage.setItem('items',JSON.stringify(items));
+  }
+
+  //点击添加
+  addItems.addEventListener('click',function(){
+    const text = document.querySelector('[name=item]').value
+    if (text !== ''){
+      addItem();
+    };
+  });
+  //点击checkbox
+  itemsList.addEventListener('click',function(e){
+    // console.log(itemsList)
+    //   console.log(e.target)
+  });
+
+  
+  // itemsList.addEventListener("mouseover",function( event ) {   
+  //   const itemIndex = (event.target.getAttribute('for'));
+  //   const deleteBtn = (event.target.querySelector('span'));
+  //   // console.log(event.target.querySelector('span'))
+  //   deleteBtn.setAttribute('class','');
+  // });
+  // itemsList.addEventListener("mouseout",function( event ) {   
+  //   const itemIndex = (event.target.getAttribute('for'));
+  //   const deleteBtn = (event.target.querySelector('span'));
+  //   // console.log(event.target.querySelector('span'))
+  //   deleteBtn.setAttribute('class','hide');
+  // });
+
+
+
+  renderWishList(items,itemsList);
+
+  // var storage = window.localStorage;
+  // console.log(storage.items);
+</script>
+
+
+</body>
+</html>
+
