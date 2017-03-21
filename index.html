@@ -63,7 +63,8 @@
   }
 
   //点击添加
-  addItems.addEventListener('click',function(){
+  addItems.addEventListener('click',function(e){
+    // e.preventdefault();
     const text = document.querySelector('[name=item]').value
     if (text !== ''){
       addItem();
@@ -75,6 +76,7 @@
 
   renderWishList(items,itemsList);
 
+  // localStorage.clear();
 
 </script>
 
