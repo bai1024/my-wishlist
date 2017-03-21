@@ -21,14 +21,12 @@
 e.g
 
 ```javascript
-`
 <li>
-  <input type="checkbox" data-index=${i}  id="item${i}" 	${wish.done ? 'checked':''} />
-  <label for="${i}">${wish.text}
-	<span class="hide">${'x'}</span>
+  <input type="checkbox" data-index=${i}  id="item${i}" ${wish.done ? 'checked':''} />
+  <label for="${i}">
+    ${wish.text}
   </label>
 </li>
-`
 ```
 
 6.`label`
